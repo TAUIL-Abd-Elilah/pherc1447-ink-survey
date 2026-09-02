@@ -154,16 +154,32 @@ this size that is a wall, not a nuisance.
 *(Aside for anyone debugging these stores: `0/0.0.0` returning 404 is normal. They are sparse;
 only populated chunks exist. It is not data loss.)*
 
-### 4.2 Overlap-blend seams are measurable on the stride lattice
+### 4.2 Overlap-blend seams appear on partially covered segments, and scale with coverage
 
-With patch 128, overlap 0.5 and Hann blending, predictions carry faint square structure on the
-64 px stride grid. Measured on seg1 forward over CT-supported pixels only:
+With patch 128, overlap 0.5 and Hann blending, predictions can carry faint square structure on
+the 64 px stride grid. Reproduce with `scripts/repro_seam.py <prediction.tif>`, which reports
+mean |gradient| on the stride lattice against everywhere else, over supported pixels only.
 
-- mean |horizontal gradient| **1.2697** where `x % 64 == 63` vs **1.0536** elsewhere — **1.205×**
-- vertically **1.1322** vs **0.9840** — **1.151×**
+**The effect is not a general property of the blend — it depends on coverage:**
 
-A ~15–20% gradient excess sitting exactly on the seam lattice. Modest, but it manufactures
-edges, and edges are what a human hunting letterforms latches onto.
+| segment | supported fraction | horizontal ratio | vertical ratio |
+|---|---:|---:|---:|
+| control, PHerc0139 w043 | **0.925** | **0.997** | 1.002 |
+| PHerc1447 seg1 | 0.723 | 1.205 | 1.151 |
+| PHerc1447 seg3 | 0.687 | 1.182 | 1.133 |
+| PHerc1447 seg2 | 0.649 | 1.226 | 1.175 |
+| PHerc1447 seg4 | 0.118 | 1.255 | 1.200 |
+
+On a well-covered segment there is **no seam at all** (ratio 0.997). The excess grows as
+coverage falls, which points at overlap-add weighting where patches straddle the coverage
+boundary rather than at the Hann window itself.
+
+An earlier revision of this README reported the 1.205× figure as a general property of the
+blend, measured on one segment. That was overstated; the control shows no effect, and the
+corrected characterisation is above.
+
+It still matters for reading results: on sparse segments it manufactures edges on a regular
+grid, and edges are what a human hunting letterforms latches onto.
 
 ## 5. What this does and does not license
 
