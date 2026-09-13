@@ -1,10 +1,36 @@
 # PHerc1447 ink survey: a control-calibrated negative, and how to tell one from a broken pipeline
 
+> ## ⚠ Correction, 2026-09-13: the surfaces under this negative do not follow the sheets
+>
+> I have since measured every published PHerc1447 surface — the eleven `auto_grown_*` segments
+> used here and the three `z_dbg_gen_*` raw meshes — against the team's own published surface
+> prediction for this volume. **Median 61.2°, range 42.2–81.5°, 0 of 14 within 30° of the local
+> sheet normal**, where a random-orientation null is 60°. The same measurement returns 4.1–6.5°
+> on a curated trace (PHerc0139 w043) and on meshes from the public eligible-scroll corpus, and
+> a second gate deriving its normal from raw CT instead of the prediction agrees segment by
+> segment.
+>
+> **What that does to the result below.** An ink model reading a surface that shears across
+> windings sees a blend of sheet and gap, which suppresses signal for reasons unrelated to
+> whether ink is present. The negative reported here is therefore **much weaker evidence than it
+> appeared**: it shows no ink was recovered from these surfaces, not that PHerc1447 lacks ink in
+> those regions. **The pipeline-validation half of this repo — the CT-support gate, the
+> label-smoothing rescale, the control distribution, the confidence-ratio test — is unaffected
+> and still stands.** The scroll-level conclusion is withdrawn.
+>
+> Measurement, data and code: **[eligible-mesh-alignment](https://github.com/TAUIL-Abd-Elilah/eligible-mesh-alignment)**.
+> The alignment gate is [@flummoxjr](https://github.com/flummoxjr)'s, from
+> [gp13-ink-detectability](https://github.com/flummoxjr/gp13-ink-detectability).
+>
+> This matters beyond my own repo: PHerc1447 carries more published segments than any other
+> scroll, and several people have published ink negatives on them.
+
+
 We ran the 18 August First Letters workflow end to end on **PHerc. 1447**, a prize-eligible
 volume, using the released [`scrollprize/ink_9um`](https://huggingface.co/scrollprize/ink_9um)
 model against the four surface volumes the Open Data bucket already publishes for it.
 
-**Result: no legible ink in those four segments.** ~42 cm² of real surface, 956 sliding 4 cm²
+**Result: no legible ink in those four segments** (read with the correction above — those surfaces are oblique to the sheets). ~42 cm² of real surface, 956 sliding 4 cm²
 windows per direction, both directions run, measured against a 345-window known-ink control run through the
 identical pipeline on the same day.
 
