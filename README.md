@@ -1,6 +1,6 @@
 # PHerc1447 ink survey: a control-calibrated negative, and how to tell one from a broken pipeline
 
-> ## ⚠ Correction, 2026-09-13: the surfaces under this negative do not follow the sheets
+> ## ⚠ Correction (2026-09-13, updated 2026-09-16): the surfaces under this negative are not a fair test for ink
 >
 > I have since measured every published PHerc1447 surface — the eleven `auto_grown_*` segments
 > used here and the three `z_dbg_gen_*` raw meshes — against the team's own published surface
@@ -10,9 +10,19 @@
 > a second gate deriving its normal from raw CT instead of the prediction agrees segment by
 > segment.
 >
-> **What that does to the result below.** An ink model reading a surface that shears across
-> windings sees a blend of sheet and gap, which suppresses signal for reasons unrelated to
-> whether ink is present. The negative reported here is therefore **much weaker evidence than it
+> **Update, 2026-09-16 — a second problem, and the first one survives it.** A visual check drew one
+> of these surfaces over an entirely black slice. Sampling 60 vertices per surface: the fourteen sit
+> on nonzero CT a **median of 46%** of the time (min 12%), against 100% for corpus meshes, and eleven
+> lie in the last few thousand slices of the volume, several running past its end. This repo's own
+> CT-support gate had already measured the four published surfaces at 48–53% nonzero mid-layer and
+> **let them through** — the threshold I set was too permissive to catch a surface that is half
+> empty. That confound could by itself mimic a 61° reading, so it was tested: **the three surfaces
+> lying entirely on real CT read 49.9°, 68.2° and 71.1°**, and on the slices they visibly cut
+> straight across the sheets. So there are two independent reasons, not one.
+>
+> **What that does to the result below.** An ink model reading a surface that is half off the
+> scanned papyrus, and shears across windings where it is on it, recovers little for reasons
+> unrelated to whether ink is present. The negative reported here is therefore **much weaker evidence than it
 > appeared**: it shows no ink was recovered from these surfaces, not that PHerc1447 lacks ink in
 > those regions. **The pipeline-validation half of this repo — the CT-support gate, the
 > label-smoothing rescale, the control distribution, the confidence-ratio test — is unaffected
