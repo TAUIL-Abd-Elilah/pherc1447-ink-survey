@@ -1,5 +1,14 @@
 # PHerc1447 ink survey: a control-calibrated negative, and how to tell one from a broken pipeline
 
+> ## ⚠ Update 2026-09-26: ink HAS been found on PHerc1447
+>
+> On 24 Sep the Vesuvius Challenge team announced that a new 9 µm ink-detection recipe by
+> Youssef Nader reveals ink on PHerc1447: a few strokes without fine-tuning and about ten
+> letters with fine-tuning, around (x 4144, y 2742, z 12557) in the public 8.64 µm volume.
+> PHerc1447 was withdrawn from the First Letters prize as a result. This confirms the withdrawal
+> below: the negative in this repo came from off-sheet surfaces and the released `ink_9um`
+> checkpoints, and was never evidence that PHerc1447 lacks ink.
+>
 > ## ⚠ Correction (2026-09-13, updated 2026-09-16): the surfaces under this negative are not a fair test for ink
 >
 > I have since measured every published PHerc1447 surface — the eleven `auto_grown_*` segments
